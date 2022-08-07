@@ -1,0 +1,15 @@
+icon/*
+old/*
+qiita/*
+*.dot*
+*.doc*
+*.lnk
+*.frx
+*.tmp
+*.http
+draftingtools.xml
+mdlTest.bas
+NewMacros.bas
+ThisDocument.doccls
+
+
