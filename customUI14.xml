@@ -38,8 +38,13 @@
                 		<button id="body5" keytip ="B5" image ="body5" label="本文　(ア)" screentip="本文[(ア)]スタイルの設定" supertip="段落に本文[(ア)]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body5_onAction" />
 					</box>
 				</group>
+				<group id="tool" label="ツール">
+					<button id="CommaToOkuman" keytip ="M" imageMso ="CurrentViewSettings" label="位取り[万]" screentip="位取り変換" supertip="位取りを億・万に変換します。" size="normal" onAction="mdlRibbon.CommaToOkuman_onAction" />
+					<button id="OkumanToComma" keytip ="C" imageMso ="CurrentViewSettings" label="位取り[コンマ]" screentip="位取り変換" supertip="位取りをコンマに変換します。" size="normal" onAction="mdlRibbon.OkumanToComma_onAction" />
+				</group>
 				<group id="config" label="設定">
 					<button id="callKeyBindIndent" keytip ="R" imageMso ="CurrentViewSettings" label="設定" screentip="設定ダイアログ" supertip="設定ダイアログを開きます。" size="normal" onAction="mdlRibbon.Config_onAction" />
+					<button id="checkVersion" keytip ="V" imageMso ="CurrentViewSettings" label="アップデート確認" screentip="最新版の確認" supertip="最新版がアップロードされているかを確認します。" size="normal" onAction="mdlRibbon.CheckVersion_onAction" />
 				</group>
 			</tab>
 		</tabs>
