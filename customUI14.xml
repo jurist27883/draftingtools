@@ -1,49 +1,74 @@
-<customUI onLoad="mdlRibbon.Ribbon_OnLoad" xmlns="http://schemas.microsoft.com/office/2009/07/customui">
+<customUI onLoad="mdlRibbon.Ribbon_OnLoad"
+	xmlns="http://schemas.microsoft.com/office/2009/07/customui">
 	<ribbon>
 		<tabs>
 			<tab id="drafting" label="起案">
 				<group id="indent" label="インデント">
 					<box id="indentLefts" boxStyle="vertical">
-                		<button id="indentLeft" keytip ="L" image ="indentleft" label="全体(左)" screentip="左に全体インデント" supertip="1文字分左に段落全体をインデントします。" size="normal" onAction="mdlRibbon.IndentLeft_onAction" />
-                		<button id="indentPrimaryLeft" keytip ="L1" image ="indentprimaryleft" label="1行目(左)" screentip="左に1行目インデント" supertip="1文字分左に1行目をインデントします。" size="normal" onAction="mdlRibbon.IndentPrimaryLeft_onAction" />
-                		<button id="indentSecondaryLeft" keytip ="L2" image ="indentsecondaryleft" label="2行目以下(左)" screentip="左に2行目以下インデント" supertip="1文字分左に2行目以下をインデントします。" size="normal" onAction="mdlRibbon.IndentSecondaryLeft_onAction" />
+						<button id="indentLeft" keytip ="L" image ="indentleft" label="全体(左)" screentip="左に全体インデント" supertip="1文字分左に段落全体をインデントします。" size="normal" onAction="mdlRibbon.IndentLeft_onAction" />
+						<button id="indentPrimaryLeft" keytip ="L1" image ="indentprimaryleft" label="1行目(左)" screentip="左に1行目インデント" supertip="1文字分左に1行目をインデントします。" size="normal" onAction="mdlRibbon.IndentPrimaryLeft_onAction" />
+						<button id="indentSecondaryLeft" keytip ="L2" image ="indentsecondaryleft" label="2行目以下(左)" screentip="左に2行目以下インデント" supertip="1文字分左に2行目以下をインデントします。" size="normal" onAction="mdlRibbon.IndentSecondaryLeft_onAction" />
 					</box>
 					<box id="indentRights" boxStyle="vertical">
-                		<button id="indentright" keytip ="R" image ="indentright" label="全体(右)" screentip="右に全体インデント" supertip="1文字分右に段落全体をインデントします。" size="normal" onAction="mdlRibbon.IndentRight_onAction" />
-                		<button id="indentPrimaryright" keytip ="R1" image ="indentprimaryright" label="1行目(右)" screentip="右に1行目インデント" supertip="1文字分右に1行目をインデントします。" size="normal" onAction="mdlRibbon.IndentPrimaryRight_onAction" />
-                		<button id="indentSecondaryright" keytip ="R2" image ="indentsecondaryright" label="2行目以下(右)" screentip="右に2行目以下インデント" supertip="1文字分右に2行目以下をインデントします。" size="normal" onAction="mdlRibbon.IndentSecondaryRight_onAction" />
+						<button id="indentright" keytip ="R" image ="indentright" label="全体(右)" screentip="右に全体インデント" supertip="1文字分右に段落全体をインデントします。" size="normal" onAction="mdlRibbon.IndentRight_onAction" />
+						<button id="indentPrimaryright" keytip ="R1" image ="indentprimaryright" label="1行目(右)" screentip="右に1行目インデント" supertip="1文字分右に1行目をインデントします。" size="normal" onAction="mdlRibbon.IndentPrimaryRight_onAction" />
+						<button id="indentSecondaryright" keytip ="R2" image ="indentsecondaryright" label="2行目以下(右)" screentip="右に2行目以下インデント" supertip="1文字分右に2行目以下をインデントします。" size="normal" onAction="mdlRibbon.IndentSecondaryRight_onAction" />
 					</box>
 					<button id="indentRound" keytip ="L" image ="indentround" label="文字単位" screentip="文字単位インデント" supertip="インデントを文字単位に設定します。" size="normal" onAction="mdlRibbon.IndentRound_onAction" />
 				</group>
 				<group id="style" label="段落スタイル">
+
+					<gallery id="title" label="見出し" keytip="S" imageMso="HappyFace" size="large" showItemLabel="true" showItemImage="true" itemWidth="32" itemHeight="32" columns="5" onAction="Title_onAction">
+						<item id="title1" label="第1" image="title1" screentip="見出し[第1]スタイルの設定" supertip="段落に見出し[第1]スタイルを設定します。" />
+						<item id="title2" label="1" image="title2" screentip="screentip of item2" supertip="supertip of item2" />
+						<item id="title3" label="(1)" image="title3" screentip="screentip of item3" supertip="supertip of item3" />
+						<item id="title4" label="ア" image="title4" screentip="screentip of item4" supertip="supertip of item4" />
+						<item id="title5" label="(ア)" image="title5" screentip="screentip of item5" supertip="supertip of item5" />
+					</gallery>
+					<gallery id="body" label="本文" keytip="B" imageMso="HappyFace" size="large" showItemLabel="true" showItemImage="true" itemWidth="32" itemHeight="32" columns="5" onAction="Body_onAction">
+						<item id="body1" label="第1" image="body1" screentip="screentip of item1" supertip="supertip of item1" />
+						<item id="body2" label="1" image="body2" screentip="screentip of item2" supertip="supertip of item2" />
+						<item id="body3" label="(1)" image="body3" screentip="screentip of item3" supertip="supertip of item3" />
+						<item id="body4" label="ア" image="body4" screentip="screentip of item4" supertip="supertip of item4" />
+						<item id="body5" label="(ア)" image="body5" screentip="screentip of item5" supertip="supertip of item5" />
+					</gallery>
+
+
 					<box id="level1" boxStyle="vertical">
-                		<button id="title1" keytip ="T1" image ="title1" label="見出し第1" screentip="見出し[第1]スタイルの設定" supertip="段落に見出し[第1]スタイルを設定します。" size="normal" onAction="mdlRibbon.Title1_onAction" />
-                		<button id="body1" keytip ="B1" image ="body1" label="本文　第1" screentip="本文[第1]スタイルの設定" supertip="段落に本文[第1]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body1_onAction" />
-                		<button id="clearstyle" keytip ="C" image ="clearstyle" label="クリア" screentip="書式クリア" supertip="段落に設定された書式をクリアします。" size="normal" onAction="mdlRibbon.ClearStyle_onAction" />
+						<button id="title1_1" keytip ="T1" image ="title1" label="見出し第1" screentip="見出し[第1]スタイルの設定" supertip="段落に見出し[第1]スタイルを設定します。" size="normal" onAction="mdlRibbon.Title1_onAction" />
+						<button id="body1_1" keytip ="B1" image ="body1" label="本文　第1" screentip="本文[第1]スタイルの設定" supertip="段落に本文[第1]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body1_onAction" />
+						<button id="setstyle" keytip ="S" imageMso ="CurrentViewSettings" label="選択範囲に設定" screentip="スタイルの自動設定" supertip="選択範囲にスタイルを自動設定します。" size="normal" onAction="mdlRibbon.SetStyle_onAction" />
 					</box>
 					<box id="level2" boxStyle="vertical">
-                		<button id="title2" keytip ="T2" image ="title2" label="見出し1" screentip="見出し[1]スタイルの設定" supertip="段落に見出し[1]スタイルを設定します。" size="normal" onAction="mdlRibbon.Title2_onAction" />
-                		<button id="body2" keytip ="B2" image ="body2" label="本文　1" screentip="本文[1]スタイルの設定" supertip="段落に本文[1]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body2_onAction" />
+						<button id="title2_1" keytip ="T2" image ="title2" label="見出し1" screentip="見出し[1]スタイルの設定" supertip="段落に見出し[1]スタイルを設定します。" size="normal" onAction="mdlRibbon.Title2_onAction" />
+						<button id="body2_1" keytip ="B2" image ="body2" label="本文　1" screentip="本文[1]スタイルの設定" supertip="段落に本文[1]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body2_onAction" />
+						<button id="convertlistnumbers" keytip ="C" imageMso ="CurrentViewSettings" label="箇条書き変換・解除" screentip="箇条書きの通常文字への変換/自動設定解除" supertip="自動設定された箇条書きを通常の文字に変換し、自動設定を解除します。" size="normal" onAction="mdlRibbon.ConvertListNumbers_onAction" />
 					</box>
 					<box id="level3" boxStyle="vertical">
-                		<button id="title3" keytip ="T3" image ="title3" label="見出し(1)" screentip="見出し[(1)]スタイルの設定" supertip="段落に見出し[(1)]スタイルを設定します。" size="normal" onAction="mdlRibbon.Title3_onAction" />
-                		<button id="body3" keytip ="B3" image ="body3" label="本文　(1)" screentip="本文[(1)]スタイルの設定" supertip="段落に本文[(1)]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body3_onAction" />
+						<button id="title3_1" keytip ="T3" image ="title3" label="見出し(1)" screentip="見出し[(1)]スタイルの設定" supertip="段落に見出し[(1)]スタイルを設定します。" size="normal" onAction="mdlRibbon.Title3_onAction" />
+						<button id="body3_1" keytip ="B3" image ="body3" label="本文　(1)" screentip="本文[(1)]スタイルの設定" supertip="段落に本文[(1)]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body3_onAction" />
+						<button id="clearstyle" keytip ="C" image ="clearstyle" label="クリア" screentip="書式クリア" supertip="段落に設定された書式をクリアします。" size="normal" onAction="mdlRibbon.ClearStyle_onAction" />
 					</box>
 					<box id="level4" boxStyle="vertical">
-                		<button id="title4" keytip ="T4" image ="title4" label="見出しア" screentip="見出し[ア]スタイルの設定" supertip="段落に見出し[ア]スタイルを設定します。" size="normal" onAction="mdlRibbon.Title4_onAction" />
-                		<button id="body4" keytip ="B4" image ="body4" label="本文　ア" screentip="本文[ア]スタイルの設定" supertip="段落に本文[ア]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body4_onAction" />
+						<button id="title4_1" keytip ="T4" image ="title4" label="見出しア" screentip="見出し[ア]スタイルの設定" supertip="段落に見出し[ア]スタイルを設定します。" size="normal" onAction="mdlRibbon.Title4_onAction" />
+						<button id="body4_1" keytip ="B4" image ="body4" label="本文　ア" screentip="本文[ア]スタイルの設定" supertip="段落に本文[ア]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body4_onAction" />
 					</box>
 					<box id="level5" boxStyle="vertical">
-                		<button id="title5" keytip ="T5" image ="title5" label="見出し(ア)" screentip="見出し[(ア)]スタイルの設定" supertip="段落に見出し[(ア)]スタイルを設定します。" size="normal" onAction="mdlRibbon.Title5_onAction" />
-                		<button id="body5" keytip ="B5" image ="body5" label="本文　(ア)" screentip="本文[(ア)]スタイルの設定" supertip="段落に本文[(ア)]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body5_onAction" />
+						<button id="title5_1" keytip ="T5" image ="title5" label="見出し(ア)" screentip="見出し[(ア)]スタイルの設定" supertip="段落に見出し[(ア)]スタイルを設定します。" size="normal" onAction="mdlRibbon.Title5_onAction" />
+						<button id="body5_1" keytip ="B5" image ="body5" label="本文　(ア)" screentip="本文[(ア)]スタイルの設定" supertip="段落に本文[(ア)]スタイルを設定します。" size="normal" onAction="mdlRibbon.Body5_onAction" />
 					</box>
 				</group>
+				<group id="revision" label="変更履歴">
+					<button id="acceptrevision" keytip ="A1" imageMso ="CurrentViewSettings" label="選択反映" screentip="選択した履歴の反映" supertip="選択範囲にあるユーザーが加えた変更履歴を反映します。" size="normal" onAction="mdlRibbon.AcceptRevisions_onAction" />
+					<button id="acceptchangedformat" keytip ="A2" imageMso ="CurrentViewSettings" label="書式変更反映" screentip="書式変更履歴の反映" supertip="書式の変更履歴を反映します。" size="normal" onAction="mdlRibbon.AcceptChangedFormat_onAction" />
+					<toggleButton id="toggletrackingformat" keytip ="F" imageMso ="CurrentViewSettings" label="書式変更履歴設定" screentip="書式変更履歴の設定" supertip="書式の変更履歴を設定します。" size="normal" onAction="mdlRibbon.ToggleTrackingFormat_onAction" getPressed="mdlRibbon.ToggleTrackingFormat_getPressed"/>
+				</group>				
 				<group id="tool" label="ツール">
-					<button id="CommaToOkuman" keytip ="M" imageMso ="CurrentViewSettings" label="位取り[万]" screentip="位取り変換" supertip="位取りを億・万に変換します。" size="normal" onAction="mdlRibbon.CommaToOkuman_onAction" />
-					<button id="OkumanToComma" keytip ="C" imageMso ="CurrentViewSettings" label="位取り[コンマ]" screentip="位取り変換" supertip="位取りをコンマに変換します。" size="normal" onAction="mdlRibbon.OkumanToComma_onAction" />
+					<button id="commatookuman" keytip ="M" imageMso ="CurrentViewSettings" label="位取り[万]" screentip="位取り変換" supertip="位取りを億・万に変換します。" size="normal" onAction="mdlRibbon.CommaToOkuman_onAction" />
+					<button id="okumantocomma" keytip ="C" imageMso ="CurrentViewSettings" label="位取り[コンマ]" screentip="位取り変換" supertip="位取りをコンマに変換します。" size="normal" onAction="mdlRibbon.OkumanToComma_onAction" />
 				</group>
 				<group id="config" label="設定">
-					<button id="callKeyBindIndent" keytip ="R" imageMso ="CurrentViewSettings" label="設定" screentip="設定ダイアログ" supertip="設定ダイアログを開きます。" size="normal" onAction="mdlRibbon.Config_onAction" />
+					<button id="configdialog" keytip ="R" imageMso ="CurrentViewSettings" label="設定" screentip="設定ダイアログ" supertip="設定ダイアログを開きます。" size="normal" onAction="mdlRibbon.Config_onAction" />
 					<button id="checkVersion" keytip ="V" imageMso ="CurrentViewSettings" label="アップデート確認" screentip="最新版の確認" supertip="最新版がアップロードされているかを確認します。" size="normal" onAction="mdlRibbon.CheckVersion_onAction" />
 				</group>
 			</tab>
