@@ -1,5 +1,5 @@
 Attribute VB_Name = "mdlXml"
-'@Folder "xml"
+'@Folder "config.xml"
 Option Explicit
 
 
@@ -68,7 +68,7 @@ Sub RemoveNode(contextNodeTag As String, keyNodeTag As String, keyNodeText As St
     
     Set nodes = SelectedNodes(mdlXpath.TargetNode(contextNodeTag, keyNodeTag, keyNodeText))
     
-    If nodes.Length = 0 Then
+    If nodes.length = 0 Then
         Exit Sub
     End If
     

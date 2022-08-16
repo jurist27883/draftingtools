@@ -1,5 +1,5 @@
 Attribute VB_Name = "mdlListBoxClass"
-'@Folder("config")
+'@Folder "config.form"
 Option Explicit
 
 Enum CLASS_INDEX

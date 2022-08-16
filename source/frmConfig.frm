@@ -4,7 +4,7 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmConfig
    ClientHeight    =   5970
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   9690.001
+   ClientWidth     =   9690
    OleObjectBlob   =   "frmConfig.frx":0000
    StartUpPosition =   1  'オーナー フォームの中央
 End
@@ -13,7 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-'@Folder "config"
+'@Folder "config.form"
 Option Explicit
 
 Private Sub SetStyleFonts(styleName As String, willGothic As Boolean, willBold As Boolean)
@@ -45,8 +45,6 @@ End Sub
 Private Sub cmdCancel_Click()
     Unload frmConfig
 End Sub
-
-
 
 Private Sub lstClass_Change()
     '分類リスト行選択時のキーリスト絞込み

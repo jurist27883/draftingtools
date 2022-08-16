@@ -1,8 +1,8 @@
 Attribute VB_Name = "mdlStyleSetter"
-'@Folder("main")
+'@Folder "main.style"
 Option Explicit
 
-Sub SetStyle()
+Sub SetStyles()
     Dim p As Paragraph
     Dim styleName As String
     
@@ -11,9 +11,9 @@ Sub SetStyle()
     ur.StartCustomRecord
     
     For Each p In Selection.Paragraphs
-        Select Case p.Style
-        Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5, BODY1, BODY2, BODY3, BODY4, BODY5
-        Case Else
+'        Select Case p.Style
+'        Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5, BODY1, BODY2, BODY3, BODY4, BODY5
+'        Case Else
             styleName = GetStyle(p)
             Select Case styleName
             Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5
@@ -35,7 +35,7 @@ Sub SetStyle()
                 End Select
                 p.Style = styleName
             End Select
-        End Select
+'        End Select
     Next
     
     ur.EndCustomRecord
@@ -70,22 +70,22 @@ Private Function GetStyle(p As Paragraph) As String
         char2 = Mid(p.Range.ListFormat.ListString, 2, 1)
     End If
     
-    Select Case p.Style
-    Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5, BODY1, BODY2, BODY3, BODY4, BODY5
-        GetStyle = p.Style
-        Exit Function
-    End Select
+'    Select Case p.Style
+'    Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5, BODY1, BODY2, BODY3, BODY4, BODY5
+'        GetStyle = p.Style
+'        Exit Function
+'    End Select
     
     Select Case True
-    Case isOrdinalNumber(char1, char2)
+    Case IsOrdinalNumber(char1, char2)
         GetStyle = TITLE1
-    Case isIndexNumber(char1, char2)
+    Case IsIndexNumber(char1, char2)
         GetStyle = TITLE2
-    Case isBracketsNumber(char1, char2)
+    Case IsBracketsNumber(char1, char2)
         GetStyle = TITLE3
-    Case isIndexKatakana(char1, char2)
+    Case IsIndexKatakana(char1, char2)
         GetStyle = TITLE4
-    Case isBracketsKatakana(char1, char2)
+    Case IsBracketsKatakana(char1, char2)
         GetStyle = TITLE5
     Case Else
         GetStyle = p.Style
@@ -93,65 +93,64 @@ Private Function GetStyle(p As Paragraph) As String
         
 End Function
 
-Private Function isBracketsKatakana(ByVal s1 As String, ByVal s2 As String) As Boolean
+Private Function IsBracketsKatakana(ByVal s1 As String, ByVal s2 As String) As Boolean
     Select Case s1
     Case "(", "Åi"
         If isKatakana(s2) Then
-            isBracketsKatakana = True
+            IsBracketsKatakana = True
         Else
-            isBracketsKatakana = False
+            IsBracketsKatakana = False
         End If
     Case Else
-        isBracketsKatakana = False
+        IsBracketsKatakana = False
     End Select
 End Function
 
-Private Function isIndexKatakana(ByVal s1 As String, ByVal s2 As String) As Boolean
+Private Function IsIndexKatakana(ByVal s1 As String, ByVal s2 As String) As Boolean
     If isKatakana(s1) And isSpace(s2) Then
-        isIndexKatakana = True
+        IsIndexKatakana = True
     Else
-        isIndexKatakana = False
+        IsIndexKatakana = False
     End If
 End Function
 
-Private Function isIndexNumber(ByVal s1 As String, ByVal s2 As String) As Boolean
+Private Function IsIndexNumber(ByVal s1 As String, ByVal s2 As String) As Boolean
     If IsNumeric(s1) And isSpace(s2) Then
-        isIndexNumber = True
+        IsIndexNumber = True
     Else
-        isIndexNumber = False
+        IsIndexNumber = False
     End If
 End Function
 
-Private Function isOrdinalNumber(ByVal s1 As String, ByVal s2 As String) As Boolean
+Private Function IsOrdinalNumber(ByVal s1 As String, ByVal s2 As String) As Boolean
     'ëÊ
     If s1 = "ëÊ" Then
         If IsNumeric(s2) Then
-            isOrdinalNumber = True
+            IsOrdinalNumber = True
         Else
-            isOrdinalNumber = False
+            IsOrdinalNumber = False
         End If
     Else
-        isOrdinalNumber = False
+        IsOrdinalNumber = False
     End If
 End Function
 
-Private Function isBracketsNumber(ByVal s1 As String, ByVal s2 As String) As Boolean
+Private Function IsBracketsNumber(ByVal s1 As String, ByVal s2 As String) As Boolean
     'äáå êîéöàÍï∂éö
     Select Case AscW(s1)
     Case -8191 To -8093, 9332 To 9351
-        isBracketsNumber = True
+        IsBracketsNumber = True
     Case Else
         Select Case s1
         Case "(", "Åi"
             If IsNumeric(s2) Then
-                isBracketsNumber = True
+                IsBracketsNumber = True
             Else
-                isBracketsNumber = False
+                IsBracketsNumber = False
             End If
         Case Else
-            isBracketsNumber = False
+            IsBracketsNumber = False
         End Select
     End Select
 End Function
-
 

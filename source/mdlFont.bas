@@ -1,5 +1,5 @@
 Attribute VB_Name = "mdlFont"
-'@Folder "main"
+'@Folder "main.style"
 Option Explicit
 
 Public Const MSMIN = "‚l‚r –¾’©"
@@ -28,6 +28,4 @@ Property Get CounterFontName(fontName As String) As String
         CounterFontName = MSMIN
     End Select
 End Property
-
-
 

@@ -1,5 +1,5 @@
 Attribute VB_Name = "mdlListBoxKeys"
-'@Folder("config")
+'@Folder "config.form"
 Option Explicit
 
 Enum CL

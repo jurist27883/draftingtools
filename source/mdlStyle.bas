@@ -1,5 +1,5 @@
 Attribute VB_Name = "mdlStyle"
-'@Folder "main"
+'@Folder "main.style"
 Option Explicit
 
 Public Const TITLE1 = "Title1"
@@ -313,3 +313,5 @@ Sub ClearStyle()
         p.Style = ActiveDocument.Styles(wdStyleNormal)
     Next
 End Sub
+
+

@@ -2,17 +2,35 @@ Attribute VB_Name = "mdlVersionChecker"
 '@Folder "version"
 Option Explicit
 
-Const thisVerion = "v2.4.1"
+Const thisVerion = "v2.4.0"
 Const key = "tag_name"
+Const checkUrl = "https://api.github.com/repos/sakura-editor/sakura/releases/latest"
+'Const checkUrl = "https://api.github.com/repos/jurist27883/draftingtools/releases/latest"
+Const downloadUrl = "https://github.com/jurist27883/draftingtools/releases/tag/"
+Const downloadFileName = "draftingtools.zip"
+
+#If VBA7 Then
+    Private Declare PtrSafe Function URLDownloadToFile Lib "urlmon" Alias "URLDownloadToFileA" _
+   (ByVal pCaller As Long, ByVal szURL As String, ByVal szFileName As String, _
+    ByVal dwReserved As Long, ByVal lpfnCB As Long) As Long
+#Else
+    Private Declare Function URLDownloadToFile Lib "urlmon" Alias "URLDownloadToFileA" _
+   (ByVal pCaller As Long, ByVal szURL As String, ByVal szFileName As String, _
+    ByVal dwReserved As Long, ByVal lpfnCB As Long) As Long
+#End If
 
 Sub CheckUpdate()
     
-    Dim httpReq As New XMLHTTP60                 '「Microsoft XML, v6.0」を参照設定
-    Dim params As New Scripting.Dictionary       '「Microsoft Scripting Runtime」を参照設定
-    
+    #If RELEASE Then
+        Dim httpReq As Object
+        Set httpReq = CreateObject("MSXML2.ServerXMLHTTP")
+    #Else
+        Dim httpReq As MSXML2.XMLHTTP60
+        Set httpReq = New MSXML2.XMLHTTP60
+    #End If
 
     With httpReq
-        .Open "GET", "https://api.github.com/repos/sakura-editor/sakura/releases/latest"
+        .Open "GET", checkUrl
         .send
     End With
 
@@ -34,10 +52,26 @@ Sub CheckUpdate()
     
     Dim newestVersion
     newestVersion = Mid(httpReq.responseText, InStr(httpReq.responseText, key) + Len(key) + Len(""":"""), l)
-    
         
     If newestVersion <> thisVerion Then
-        Debug.Print "最新バージョンがあります"
+        If MsgBox("最新バージョンがあります" + vbCrLf + "ダウンロードしますか。", vbYesNo) = vbYes Then
+            Dim wsh As Object
+            Set wsh = CreateObject("WScript.Shell")
+            Dim downloadPath As String
+            downloadPath = wsh.SpecialFolders("Desktop") + "\" + downloadFileName
+            
+            Dim strURL As String
+            strURL = "https://github.com/sakura-editor/sakura/releases/download/v2.4.1/sakura-tag-v2.4.1-build2849-ee8234f-Win32-Release-Exe.zip"
+            
+            If URLDownloadToFile(0, strURL, downloadPath, 0, 0) = 0 Then
+                MsgBox "デスクトップにダウンロードを完了しました。"
+            Else
+                MsgBox "ファイルをダウンロードできませんでした。"
+            End If
+        End If
     End If
 
 End Sub
+
+
+

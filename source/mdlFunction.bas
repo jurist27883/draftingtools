@@ -1,6 +1,24 @@
 Attribute VB_Name = "mdlFunction"
 '@Folder "other"
 Option Explicit
+Sub PushArray(ByRef arr As Variant, pushingData As Variant)
+
+    If IsArray(arr) = False Then
+        Exit Sub
+    End If
+    
+    Dim length As Long
+    length = UBound(arr) + 1
+    ReDim Preserve arr(length)
+    
+    Dim i As Long
+    If IsObject(arr(0)) Then
+        Set arr(length) = pushingData
+    Else
+        arr(length) = pushingData
+    End If
+    
+End Sub
 
 Function isKatakana(ByVal s As String) As Boolean
     Select Case AscW(s)

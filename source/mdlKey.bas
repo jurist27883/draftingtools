@@ -1,5 +1,5 @@
 Attribute VB_Name = "mdlKey"
-'@Folder "keycode"
+'@Folder "config.keycode"
 Option Explicit
 
 Property Get BindingCommand(code As Long) As String

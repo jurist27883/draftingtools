@@ -1,5 +1,5 @@
 Attribute VB_Name = "mdlXpath"
-'@Folder "xml"
+'@Folder "config.xml"
 Option Explicit
 
 Property Get TargetNode(targetTag As String, Optional termsTag As String = "", _
