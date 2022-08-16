@@ -3,7 +3,9 @@ Attribute VB_Name = "mdlStyleSetter"
 Option Explicit
 
 Sub SetStyles()
-    '‘I‘ğ”ÍˆÍ‚ÉƒXƒ^ƒCƒ‹©“®İ’è
+<<<<<<< HEAD
+=======
+    'é©•ï½¸è¬šæ¨’ï½¯?¿½è—ï½²ç¸º?½«ç¹§?½¹ç¹§?½¿ç¹§?½¤ç¹ï½«é–¾?½ªèœæ?Šï½¨?½­è³?¿½
     Dim p As Paragraph
     Dim styleName As String
     
@@ -12,26 +14,26 @@ Sub SetStyles()
     ur.StartCustomRecord
     
     For Each p In Selection.Paragraphs
-        styleName = GetStyle(p)
-        Select Case styleName
-        Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5
-            If p.Range.ListFormat.ListString = "" Then
+            styleName = GetStyle(p)
+            Select Case styleName
+            Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5
+                If p.Range.ListFormat.ListString = "" Then
+                    p.Style = styleName
+                End If
+            Case Else
+                Select Case GetPreiousStyle(p)
+                Case TITLE1, BODY1
+                    styleName = BODY1
+                Case TITLE2, BODY2
+                    styleName = BODY2
+                Case TITLE3, BODY3
+                    styleName = BODY3
+                Case TITLE4, BODY4
+                    styleName = BODY4
+                Case TITLE5, BODY5
+                    styleName = BODY5
+                End Select
                 p.Style = styleName
-            End If
-        Case Else
-            Select Case GetPreiousStyle(p)
-            Case TITLE1, BODY1
-                styleName = BODY1
-            Case TITLE2, BODY2
-                styleName = BODY2
-            Case TITLE3, BODY3
-                styleName = BODY3
-            Case TITLE4, BODY4
-                styleName = BODY4
-            Case TITLE5, BODY5
-                styleName = BODY5
-            End Select
-            p.Style = styleName
         End Select
     Next
     
@@ -57,7 +59,7 @@ Private Function GetPreiousStyle(p As Paragraph) As String
 End Function
 
 Private Function GetStyle(p As Paragraph) As String
-    '’i—‚ÌƒXƒ^ƒCƒ‹æ“¾E„’è
+    'è°¿?½µé—œï½½ç¸º?½®ç¹§?½¹ç¹§?½¿ç¹§?½¤ç¹ï½«èœ¿é–€?½¾åŠ±?¿½?½»è¬—ï½¨è³?¿½
     Dim char1, char2 As String
     If p.Range.ListFormat.ListString = "" Then
         char1 = Left(p, 1)
@@ -86,7 +88,7 @@ End Function
 
 Private Function IsBracketsKatakana(ByVal s1 As String, ByVal s2 As String) As Boolean
     Select Case s1
-    Case "(", "i"
+    Case "(", "?¿½?½¼?¿½"
         If isKatakana(s2) Then
             IsBracketsKatakana = True
         Else
@@ -114,7 +116,7 @@ Private Function IsIndexNumber(ByVal s1 As String, ByVal s2 As String) As Boolea
 End Function
 
 Private Function IsOrdinalNumber(ByVal s1 As String, ByVal s2 As String) As Boolean
-    If s1 = "‘æ" Then
+    If s1 = "éš¨?½¬" Then
         If IsNumeric(s2) Then
             IsOrdinalNumber = True
         Else
@@ -126,13 +128,13 @@ Private Function IsOrdinalNumber(ByVal s1 As String, ByVal s2 As String) As Bool
 End Function
 
 Private Function IsBracketsNumber(ByVal s1 As String, ByVal s2 As String) As Boolean
-    'Š‡ŒÊ”šˆê•¶š
+    'è«¡?½¬è ‘ï½§è¬¨?½°èŸ?å¶º?½¸Â€è­??¿½èŸ??¿½
     Select Case AscW(s1)
     Case -8191 To -8093, 9332 To 9351
         IsBracketsNumber = True
     Case Else
         Select Case s1
-        Case "(", "i"
+        Case "(", "?¿½?½¼?¿½"
             If IsNumeric(s2) Then
                 IsBracketsNumber = True
             Else
