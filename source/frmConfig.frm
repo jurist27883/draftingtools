@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmConfig 
    Caption         =   "設定"
-   ClientHeight    =   5970
+   ClientHeight    =   5490
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   9690
@@ -16,15 +16,28 @@ Attribute VB_Exposed = False
 '@Folder "config.form"
 Option Explicit
 
-Private Sub SetStyleFonts(styleName As String, willGothic As Boolean, willBold As Boolean)
-    'ActiveDocumentのStyle設定
-    If willGothic <> mdlStyle.IsGothic(styleName) Then
-        mdlStyle.ToggleFontFamily (styleName)
+Private Sub SetStyleFonts(styleName As String, dstGothic As Boolean, dstBold As Boolean)
+    'ActiveDocumentのStyleのフォント設定
+    'bug activedocumentに反映されない
+    If dstGothic <> mdlStyle.IsGothic(styleName) Then
+        mdlStyle.ToggleFontFamily styleName
     End If
-    ThisDocument.Styles(styleName).Font.Bold = willBold
+    ActiveDocument.Styles(styleName).Font.Bold = dstBold
 End Sub
 
-Private Sub SaveStyleXml(styleName As String, willGothic As Boolean, willBold As Boolean)
+Private Sub SetStyleIndents(styleName As String, dstlIndentCount As Long)
+    'ActiveDocumentのStyleのインデント設定
+    Select Case styleName
+    Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5
+        mdlStyle.IndentCount(styleName) = dstlIndentCount
+    Case BODY1
+        mdlStyle.IndentCount(styleName) = dstlIndentCount + 2
+    Case BODY2, BODY3, BODY4, BODY5
+        mdlStyle.IndentCount(styleName) = dstlIndentCount + 1
+    End Select
+End Sub
+
+Private Sub SaveStyleXml(styleName As String, dstGothic As Boolean, dstBold As Boolean, dstlIndentCount)
     'xmlファイル削除・登録
     #If RELEASE Then
         Dim dicElements As Object
@@ -37,8 +50,16 @@ Private Sub SaveStyleXml(styleName As String, willGothic As Boolean, willBold As
     mdlXml.RemoveNode TAG_STYLE, TAG_STYLE_NAME, styleName
     
     dicElements(TAG_STYLE_NAME) = styleName
-    dicElements(TAG_GOTHIC) = willGothic
-    dicElements(TAG_BOLD) = willBold
+    dicElements(TAG_GOTHIC) = dstGothic
+    dicElements(TAG_BOLD) = dstBold
+    Select Case styleName
+    Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5
+        dicElements(TAG_INDENT) = dstlIndentCount
+    Case BODY1
+        dicElements(TAG_INDENT) = dstlIndentCount + 2
+    Case BODY2, BODY3, BODY4, BODY5
+        dicElements(TAG_INDENT) = dstlIndentCount + 1
+    End Select
     mdlXml.AddNode TAG_STYLE, dicElements
 End Sub
 
@@ -53,7 +74,7 @@ Private Sub lstClass_Change()
         Case CLASS_INDEX.INSDENT_NUMBER
             lstKeys.ListIndex = 0
         Case CLASS_INDEX.STYLE_NUMBER
-            lstKeys.ListIndex = 5
+            lstKeys.ListIndex = 7
         End Select
         cmdRecommendKey.Enabled = True
     End If
@@ -120,6 +141,13 @@ Private Sub InitializeForm()
     Set chkBolds(7) = frmConfig.chkBoldBody3
     Set chkBolds(8) = frmConfig.chkBoldBody4
     Set chkBolds(9) = frmConfig.chkBoldBody5
+    
+    Set txtIndents(0) = frmConfig.txtIndentTitle1
+    Set txtIndents(1) = frmConfig.txtIndentTitle2
+    Set txtIndents(2) = frmConfig.txtIndentTitle3
+    Set txtIndents(3) = frmConfig.txtIndentTitle4
+    Set txtIndents(4) = frmConfig.txtIndentTitle5
+    
 End Sub
 
 Private Sub InitializeStyleTab()
@@ -140,23 +168,19 @@ Private Sub InitializeStyleTab()
             chkBolds(i).value = False
         End If
     Next
+    
+    For i = 0 To UBound(txtIndents)
+        txtIndents(i).value = mdlStyle.IndentCount(styleNames(i))
+    Next
 End Sub
 
-Private Sub cmdSetStyleFonts_Click()
-    SetStyleSequence
-End Sub
-
-Private Sub cmdOKStyle_Click()
-    SetStyleSequence
-    Unload frmConfig
-End Sub
-
-Private Sub SetStyleSequence()
+Private Sub cmdSetStyleSequence_Click()
     'スタイルをactivedocumentに設定・xml登録
     Dim i As Long
-    For i = 0 To 9
+    For i = 0 To UBound(styleNames)
         SetStyleFonts styleNames(i), chkGothics(i).value, chkBolds(i).value
-        SaveStyleXml styleNames(i), chkGothics(i).value, chkBolds(i).value
+        SetStyleIndents styleNames(i), txtIndents(i Mod 5).value
+        SaveStyleXml styleNames(i), chkGothics(i).value, chkBolds(i).value, txtIndents(i Mod 5).value
     Next
 End Sub
 
@@ -164,7 +188,7 @@ Private Sub cmdCancelStyle_Click()
     Unload frmConfig
 End Sub
 
-Sub SetControls()
+Private Sub SetControls()
     'フォーム上のコントロールへの反映
     If lstKeys.ListIndex = -1 Then
         cmdRecommendKey.Enabled = False
@@ -189,7 +213,6 @@ Sub SetControls()
     lblPresentCommand = ""
     txtAssigningKey = ""
 End Sub
-
 
 Private Sub txtAssigningKey_Change()
     '文字のみ/Shift+文字 のキー押下げがなされた場合にkeydownイベント内で
@@ -296,6 +319,54 @@ Private Sub txtAssigningKey_MouseDown(ByVal Button As Integer, ByVal Shift As In
     mdlFunction.SelectText txtAssigningKey
 End Sub
 
+Private Sub CheckIndentTitles(targetTextbox As MSForms.TextBox, Cancel As MSForms.ReturnBoolean)
+    If IsNumeric(targetTextbox.text) Then
+        If CLng(targetTextbox.text) >= 0 And CLng(targetTextbox.text) <= 10 _
+        And Int(targetTextbox.text) = targetTextbox.text Then
+            targetTextbox = StrConv(targetTextbox.text, vbNarrow)
+        Else
+            MsgBox "0から10までの整数を入力してください。"
+            Cancel = True
+            mdlFunction.SelectText targetTextbox
+        End If
+    Else
+        MsgBox "半角数字を入力してください。"
+        Cancel = True
+        mdlFunction.SelectText targetTextbox
+    End If
+End Sub
+
+Private Sub txtIndentTitle1_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+    CheckIndentTitles txtIndentTitle1, Cancel
+End Sub
+Private Sub txtIndentTitle2_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+    CheckIndentTitles txtIndentTitle2, Cancel
+End Sub
+Private Sub txtIndentTitle3_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+    CheckIndentTitles txtIndentTitle3, Cancel
+End Sub
+Private Sub txtIndentTitle4_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+    CheckIndentTitles txtIndentTitle4, Cancel
+End Sub
+Private Sub txtIndentTitle5_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+    CheckIndentTitles txtIndentTitle5, Cancel
+End Sub
+Private Sub txtIndentTitle1_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+     mdlFunction.SelectText txtIndentTitle1
+End Sub
+Private Sub txtIndentTitle2_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+     mdlFunction.SelectText txtIndentTitle2
+End Sub
+Private Sub txtIndentTitle3_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+     mdlFunction.SelectText txtIndentTitle3
+End Sub
+Private Sub txtIndentTitle4_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+     mdlFunction.SelectText txtIndentTitle4
+End Sub
+Private Sub txtIndentTitle5_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+     mdlFunction.SelectText txtIndentTitle5
+End Sub
+
 Private Sub UserForm_Initialize()
     'フォーム呼出時
     InitializeForm
@@ -304,3 +375,4 @@ Private Sub UserForm_Initialize()
     mdlListBoxClass.Initialize
     mdlListBoxKeys.Initialize
 End Sub
+

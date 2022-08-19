@@ -13,6 +13,17 @@ Public Const BODY3 = "Body3"
 Public Const BODY4 = "Body4"
 Public Const BODY5 = "Body5"
 
+Property Get IndentCount(styleName As String) As Long
+    'インデント幅取得
+    IndentCount = ActiveDocument.Styles(styleName).ParagraphFormat.CharacterUnitLeftIndent
+End Property
+
+Property Let IndentCount(styleName As String, indents As Long)
+    'インデント幅設定
+    ActiveDocument.Styles(styleName).ParagraphFormat.CharacterUnitLeftIndent = indents
+End Property
+
+
 Property Get IsGothic(styleName As String) As Boolean
     'ゴシック判定
     Select Case ActiveDocument.Styles(styleName).Font.NameFarEast
@@ -101,18 +112,23 @@ End Sub
 
 Sub SetSavedStylesFromXml(styleName As String)
     'xml保存スタイルを適用
-    Dim willGothic As Variant
-    Dim willBold As Variant
-    
-    For Each willGothic In mdlXml.SelectedTexts(TAG_STYLE, TAG_STYLE_NAME, styleName, TAG_GOTHIC)
-        If CBool(willGothic) <> IsGothic(styleName) Then
+    Dim dstGothic As Variant
+    For Each dstGothic In mdlXml.SelectedTexts(TAG_STYLE, TAG_STYLE_NAME, styleName, TAG_GOTHIC)
+        If CBool(dstGothic) <> IsGothic(styleName) Then
             ToggleFontFamily styleName
         End If
     Next
     
-    For Each willBold In mdlXml.SelectedTexts(TAG_STYLE, TAG_STYLE_NAME, styleName, TAG_BOLD)
-        ActiveDocument.Styles(styleName).Font.Bold = CBool(willGothic)
+    Dim dstBold As Variant
+    For Each dstBold In mdlXml.SelectedTexts(TAG_STYLE, TAG_STYLE_NAME, styleName, TAG_BOLD)
+        ActiveDocument.Styles(styleName).Font.Bold = CBool(dstGothic)
     Next
+    
+    Dim dstIndentCount As Variant
+    For Each dstIndentCount In mdlXml.SelectedTexts(TAG_STYLE, TAG_STYLE_NAME, styleName, TAG_INDENT)
+        ActiveDocument.Styles(styleName).ParagraphFormat.CharacterUnitLeftIndent = CLng(dstIndentCount)
+    Next
+    
 End Sub
 
 Private Sub CopyStyleFromDraftingTemplete(styleName As String)

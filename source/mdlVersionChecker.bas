@@ -2,10 +2,9 @@ Attribute VB_Name = "mdlVersionChecker"
 '@Folder "version"
 Option Explicit
 
-Const thisVerion = "v2.4.0"
+Const thisVerion = "v1.0.0"
 Const key = "tag_name"
-Const checkUrl = "https://api.github.com/repos/sakura-editor/sakura/releases/latest"
-'Const checkUrl = "https://api.github.com/repos/jurist27883/draftingtools/releases/latest"
+Const checkUrl = "https://api.github.com/repos/jurist27883/draftingtools/releases/latest"
 Const downloadUrl = "https://github.com/jurist27883/draftingtools/releases/tag/"
 Const downloadFileName = "draftingtools.zip"
 
@@ -54,7 +53,7 @@ Sub CheckUpdate()
     newestVersion = Mid(httpReq.responseText, InStr(httpReq.responseText, key) + Len(key) + Len(""":"""), l)
         
     If newestVersion <> thisVerion Then
-        If MsgBox("最新バージョンがあります" + vbCrLf + "ダウンロードしますか。", vbYesNo) = vbYes Then
+        If MsgBox("最新バージョンがあります。" + vbCrLf + "ダウンロードしますか。", vbYesNo) = vbYes Then
             Dim wsh As Object
             Set wsh = CreateObject("WScript.Shell")
             Dim downloadPath As String
@@ -69,6 +68,8 @@ Sub CheckUpdate()
                 MsgBox "ファイルをダウンロードできませんでした。"
             End If
         End If
+    Else
+        MsgBox "最新バージョンがインストールされています。"
     End If
 
 End Sub

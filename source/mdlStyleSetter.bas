@@ -3,6 +3,7 @@ Attribute VB_Name = "mdlStyleSetter"
 Option Explicit
 
 Sub SetStyles()
+    '選択範囲にスタイル自動設定
     Dim p As Paragraph
     Dim styleName As String
     
@@ -11,31 +12,27 @@ Sub SetStyles()
     ur.StartCustomRecord
     
     For Each p In Selection.Paragraphs
-'        Select Case p.Style
-'        Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5, BODY1, BODY2, BODY3, BODY4, BODY5
-'        Case Else
-            styleName = GetStyle(p)
-            Select Case styleName
-            Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5
-                If p.Range.ListFormat.ListString = "" Then
-                    p.Style = styleName
-                End If
-            Case Else
-                Select Case GetPreiousStyle(p)
-                Case TITLE1, BODY1
-                    styleName = BODY1
-                Case TITLE2, BODY2
-                    styleName = BODY2
-                Case TITLE3, BODY3
-                    styleName = BODY3
-                Case TITLE4, BODY4
-                    styleName = BODY4
-                Case TITLE5, BODY5
-                    styleName = BODY5
-                End Select
+        styleName = GetStyle(p)
+        Select Case styleName
+        Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5
+            If p.Range.ListFormat.ListString = "" Then
                 p.Style = styleName
+            End If
+        Case Else
+            Select Case GetPreiousStyle(p)
+            Case TITLE1, BODY1
+                styleName = BODY1
+            Case TITLE2, BODY2
+                styleName = BODY2
+            Case TITLE3, BODY3
+                styleName = BODY3
+            Case TITLE4, BODY4
+                styleName = BODY4
+            Case TITLE5, BODY5
+                styleName = BODY5
             End Select
-'        End Select
+            p.Style = styleName
+        End Select
     Next
     
     ur.EndCustomRecord
@@ -69,12 +66,6 @@ Private Function GetStyle(p As Paragraph) As String
         char1 = Left(p.Range.ListFormat.ListString, 1)
         char2 = Mid(p.Range.ListFormat.ListString, 2, 1)
     End If
-    
-'    Select Case p.Style
-'    Case TITLE1, TITLE2, TITLE3, TITLE4, TITLE5, BODY1, BODY2, BODY3, BODY4, BODY5
-'        GetStyle = p.Style
-'        Exit Function
-'    End Select
     
     Select Case True
     Case IsOrdinalNumber(char1, char2)
@@ -123,7 +114,6 @@ Private Function IsIndexNumber(ByVal s1 As String, ByVal s2 As String) As Boolea
 End Function
 
 Private Function IsOrdinalNumber(ByVal s1 As String, ByVal s2 As String) As Boolean
-    '第
     If s1 = "第" Then
         If IsNumeric(s2) Then
             IsOrdinalNumber = True

@@ -5,7 +5,7 @@ Dim addinName
 Dim addinFile
 
 addinName = "起案"
-addinFile = "drafting.dotm" 
+addinFile = "draftingtools.dotm" 
 
 IF MsgBox(addinName & "アドインをインストールしますか？", vbYesNo + vbQuestion) = vbNo Then
   WScript.Quit

@@ -37,8 +37,8 @@ Function isSpace(ByVal s As String) As Boolean
     End If
 End Function
 
-Sub SelectText(targetTextBox As textBox)
-    With targetTextBox
+Sub SelectText(targetTextbox As TextBox)
+    With targetTextbox
         .SelStart = 0
         .SelLength = Len(.text)
     End With
@@ -54,7 +54,7 @@ End Property
 
 Property Set SelectedList(targetListBox As ListBox, column As Long, value As Variant)
     If targetListBox.ListIndex Is Nothing Then
-        Exit Sub
+        Exit Property
     Else
         targetListBox.List(targetListBox.ListIndex, column) = value
     End If

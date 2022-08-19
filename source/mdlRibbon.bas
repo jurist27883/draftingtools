@@ -5,7 +5,7 @@ Option Explicit
 Private rb As IRibbonUI
 Private tgTrackingFormatPressed As Boolean
 
-Public Const TABNAME = "drafting"
+Public Const TABNAME = "draftingtools"
 
 Private Sub Ribbon_OnLoad(Ribbon As IRibbonUI)
     'ƒŠƒ{ƒ“‰Šúİ’è
