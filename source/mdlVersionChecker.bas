@@ -53,7 +53,11 @@ Sub CheckUpdate()
     newestVersion = Mid(httpReq.responseText, InStr(httpReq.responseText, key) + Len(key) + Len(""":"""), l)
         
     If newestVersion <> thisVerion Then
+<<<<<<< HEAD
         If MsgBox("ï¿½ÅVï¿½oï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B" + vbCrLf + "ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B", vbYesNo) = vbYes Then
+=======
+        If MsgBox("ÅVƒo[ƒWƒ‡ƒ“‚ª‚ ‚è‚Ü‚·B" + vbCrLf + "ƒ_ƒEƒ“ƒ[ƒh‚µ‚Ü‚·‚©B", vbYesNo) = vbYes Then
+>>>>>>> 514445e (release)
             Dim wsh As Object
             Set wsh = CreateObject("WScript.Shell")
             Dim downloadPath As String
@@ -69,7 +73,11 @@ Sub CheckUpdate()
             End If
         End If
     Else
+<<<<<<< HEAD
         MsgBox "ï¿½ÅVï¿½oï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Xï¿½gï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½B"
+=======
+        MsgBox "ÅVƒo[ƒWƒ‡ƒ“‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·B"
+>>>>>>> 514445e (release)
     End If
 
 End Sub
